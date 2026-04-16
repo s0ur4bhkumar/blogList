@@ -1,16 +1,8 @@
 const express = require("express");
 const mongoose = require("mongoose");
+const Blog = require("./models/blog");
 
 const app = express();
-
-const blogSchema = mongoose.Schema({
-  title: String,
-  author: String,
-  url: String,
-  likes: Number,
-});
-
-const Blog = mongoose.model("Blog", blogSchema);
 
 const mongoUrl =
   "mongodb+srv://fullStack:F5D8p1n@cluster0.xnma12n.mongodb.net/blogList?appName=blog";
