@@ -3,9 +3,10 @@ const mongoose = require("mongoose");
 const Blog = require("./models/blog");
 const config = require("./utils/config");
 const logger = require("./utils/logger");
+const middleware = require("./utils/middleware");
 
 const app = express();
-
+app.use(middleware.requestLogger);
 const mongoUrl = `${config.MONGODB_URI}`;
 logger.info(config.MONGODB_URI);
 logger.info("connecting to", mongoUrl);
@@ -27,6 +28,9 @@ app.post("/api/blogs", (request, response) => {
     response.status(201).json(result);
   });
 });
+
+app.use(middleware.unknownEndpoint);
+app.use(middleware.errorHandler);
 
 const PORT = config.PORT;
 app.listen(PORT, () => {
