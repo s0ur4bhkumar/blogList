@@ -6,13 +6,10 @@ const logger = require("./utils/logger");
 const middleware = require("./utils/middleware");
 
 const app = express();
+app.use(express.json());
 app.use(middleware.requestLogger);
 const mongoUrl = `${config.MONGODB_URI}`;
-logger.info(config.MONGODB_URI);
-logger.info("connecting to", mongoUrl);
 mongoose.connect(mongoUrl, { family: 4 });
-
-app.use(express.json());
 
 app.get("/api/blogs", (request, response) => {
   Blog.find({}).then((blogs) => {
