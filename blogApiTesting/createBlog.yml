@@ -1,0 +1,24 @@
+info:
+  name: createBlog
+  type: http
+  seq: 1
+
+http:
+  method: POST
+  url: http://localhost:3003/api/blogs
+  body:
+    type: json
+    data: |-
+      {
+        "title": "First blog",
+        "athor":"Host",
+        "url":"ttps://fullstackopen.com/en/part4/structure_of_backend_application_introduction_to_testing",
+        "likes": 100000
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
