@@ -1,35 +1,7 @@
-const express = require("express");
-const mongoose = require("mongoose");
-const Blog = require("./models/blog");
+const app = require("./app");
 const config = require("./utils/config");
 const logger = require("./utils/logger");
-const middleware = require("./utils/middleware");
 
-const app = express();
-app.use(express.json());
-app.use(middleware.requestLogger);
-const mongoUrl = `${config.MONGODB_URI}`;
-mongoose.connect(mongoUrl, { family: 4 });
-
-app.get("/api/blogs", (request, response) => {
-  Blog.find({}).then((blogs) => {
-    logger.info(blogs);
-    response.json(blogs);
-  });
-});
-
-app.post("/api/blogs", (request, response) => {
-  const blog = new Blog(request.body);
-
-  blog.save().then((result) => {
-    response.status(201).json(result);
-  });
-});
-
-app.use(middleware.unknownEndpoint);
-app.use(middleware.errorHandler);
-
-const PORT = config.PORT;
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+app.listen(config.PORT, () => {
+  logger.info(`server running at port ${config.PORT}`);
 });
